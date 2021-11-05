@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public float mySpeed;
     Animator myAnim;
     // Start is called before the first frame update
+    public GameObject attackCollider;
     void Start()
     {
      myAnim = GetComponent<Animator>();   
@@ -43,9 +44,28 @@ public class Player : MonoBehaviour
             myAnim.SetFloat("Run", 0);
         }
 
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            myAnim.SetTrigger("Attack");
+        }
+
+
+
         float temp = transform.position.x + a *  Time.deltaTime * mySpeed;
         float tempY = transform.position.y + b * Time.deltaTime * mySpeed;
         transform.position = new Vector3(temp, tempY, transform.position.z);
 
     }
+
+    public void SetAttackColliderOn()
+    {
+        attackCollider.SetActive(true);
+    }
+
+    public void SetAttackColliderOff()
+    {
+        attackCollider.SetActive(false);
+    }
+
+
 }
