@@ -7,7 +7,8 @@ public class Player : MonoBehaviour
     public float mySpeed;
     Animator myAnim;
     // Start is called before the first frame update
-    public GameObject attackCollider;
+    public GameObject attackCollider, kunaiPrefab;
+    float kunaidistance;
     void Start()
     {
      myAnim = GetComponent<Animator>();   
@@ -44,9 +45,17 @@ public class Player : MonoBehaviour
             myAnim.SetFloat("Run", 0);
         }
 
+
+
         if (Input.GetKeyDown(KeyCode.J))
         {
             myAnim.SetTrigger("Attack");
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            myAnim.SetTrigger("AttackThrow");
+
         }
 
 
@@ -65,6 +74,21 @@ public class Player : MonoBehaviour
     public void SetAttackColliderOff()
     {
         attackCollider.SetActive(false);
+    }
+
+    public void KunaiInstantiate()
+    {
+        if(transform.localScale.x == 1.0f)
+            {
+                kunaidistance = 1.0f;
+            }
+            else if(transform.localScale.x == -1.0f)
+            {
+                kunaidistance = -1.0f;
+            }
+
+            Vector3 localtion = new Vector3(transform.position.x + kunaidistance, transform.position.y, transform.position.z);
+            Instantiate(kunaiPrefab, localtion, Quaternion.identity);
     }
 
 
