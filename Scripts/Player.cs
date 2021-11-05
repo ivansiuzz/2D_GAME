@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         float a = Input.GetAxis("Horizontal");
+        float b = Input.GetAxis("Vertical");
 
         if(a > 0)
         {
@@ -25,9 +26,26 @@ public class Player : MonoBehaviour
             transform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
-        myAnim.SetFloat("Run", Mathf.Abs(a));
+        if (Mathf.Abs(a) > 0.1f && b ==0)
+        {
+            myAnim.SetFloat("Run", Mathf.Abs(a));
+        }
+        else if (Mathf.Abs(b) > 0.1f && a == 0)
+        {
+            myAnim.SetFloat("Run", Mathf.Abs(b));
+        }
+        else if (Mathf.Abs(a) > 0.1f && Mathf.Abs(b) > 0.1f)
+        {
+            myAnim.SetFloat("Run", Mathf.Abs(a));
+        }
+        else
+        {
+            myAnim.SetFloat("Run", 0);
+        }
+
         float temp = transform.position.x + a *  Time.deltaTime * mySpeed;
-        transform.position = new Vector3(temp, transform.position.y, transform.position.z);
+        float tempY = transform.position.y + b * Time.deltaTime * mySpeed;
+        transform.position = new Vector3(temp, tempY, transform.position.z);
 
     }
 }
